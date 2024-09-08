@@ -1,0 +1,135 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration will be overridden by the Spring profile you use,
+# for example application-dev.yml if you use the "dev" profile.
+#
+# Full reference for Standard Spring Boot properties is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+# set -Dspring.profiles.active=<dev|sit|int> as JVM argument to run in desired profile
+# If no profile is specified explicitly, application will fall back to default profile, which is "local"
+
+spring:
+  application:
+    name: ksoot-poc
+  devtools:
+    add-properties: false
+    restart:
+      enabled: false
+      exclude: logs/*,application.log,*.log,*.log.*
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+      - org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration
+  messages:
+    basename: i18n/messages,i18n/errors,i18n/problems
+    use-code-as-default-message: true
+    #cache-duration=PT10S
+    #fallback-to-system-locale=true
+  jackson:
+    serialization:
+      write-dates-with-zone-id: true
+      write-dates-as-timestamps: false
+    #hateoas:
+    #use-hal-as-default-json-media-type: false
+  #------------------------- MongoDB configuration -------------------------
+  data:
+    mongodb:
+      uri: ${MONGODB_URL:mongodb://localhost:27017}
+      database: ${MONGODB_DATABASE:ksoot_poc}
+      auto-index-creation: false
+      uuid-representation: standard
+  docker:
+    compose:
+      enabled: false
+  main:
+    log-startup-info: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+  threads:
+    virtual:
+      enabled: true
+
+#------------------------- Actuators configuration -------------------------
+# If not specified '/actuator' is taken as default. If specified must start with '/'
+#management.endpoints.web.base-path=/
+# Set it as "*", if you want to expose all actuator endpoints
+management:
+  endpoint:
+    health:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: info,health,metrics
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+problem:
+  type-url: http://localhost:8080/problems/help.html
+  debug-enabled: false
+  stacktrace-enabled: false
+  cause-chains-enabled: false
+
+server:
+  port: 8080
+  forward-headers-strategy: framework
+#    servlet:
+#        context-path: /api
+logging:
+  level:
+    ROOT: DEBUG
+debug: false
+
+#------------------------- Swagger configuration -------------------------
+springdoc:
+  show-actuator: true
+  group-configs:
+    - group: actuator
+      display-name: Actuator
+      paths-to-match: /actuator/**
+    - group: Location
+      display-name: Location
+      paths-to-match: /**/location/**
+#    - group: audit
+#      display-name: Audit
+#      paths-to-match: /**/audit-history/**
+  swagger-ui:
+    syntaxHighlight:
+      activated: true
+
+mongock:
+  enabled: true
+  default-author: system
+  index-creation: true
+  #    transaction-strategy: change_unit
+  migration-scan-package:
+    - com.ksoot.poc.domain.migration
+javers:
+  mappingStyle: FIELD
+  algorithm: SIMPLE
+  commitIdGenerator: synchronized_sequence
+  prettyPrint: true
+  typeSafeValues: false
+  initialChanges: true
+  terminalChanges: true
+#  packagesToScan:
+  auditableAspectEnabled: true
+  springDataAuditableRepositoryAspectEnabled: true
+#  objectAccessHook:
+  usePrimitiveDefaults: true
+  prettyPrintDateFormats:
+    localDateTime: 'dd MMM yyyy, HH:mm:ss'
+    zonedDateTime: 'dd MMM yyyy, HH:mm:ssZ'
+    localDate: 'dd MMM yyyy'
+    localTime: 'HH:mm:ss'
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here
+# ===================================================================
