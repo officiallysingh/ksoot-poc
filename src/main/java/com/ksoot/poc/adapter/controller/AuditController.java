@@ -1,10 +1,9 @@
-package com.ksoot.poc.adapter;
+package com.ksoot.poc.adapter.controller;
 
 import com.ksoot.poc.domain.model.State;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.javers.core.Javers;
 import org.javers.core.json.JsonConverter;
@@ -22,9 +21,9 @@ public class AuditController {
   private final Javers javers;
 
   @Operation(
-          operationId = "state-snapshots",
-          summary = "Get State audit logs",
-          tags = {"State Management"})
+      operationId = "state-snapshots",
+      summary = "Get State audit logs",
+      tags = {"State Management"})
   @GetMapping("/states/snapshots")
   public String getPersonSnapshots() {
     QueryBuilder jqlQuery = QueryBuilder.byClass(State.class);

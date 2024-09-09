@@ -40,8 +40,6 @@ public class MongoDBConfig extends AbstractMongoClientConfiguration {
 
   private final MongoProperties mongoProperties;
 
-  //  private final MongoAuditProperties mongoAuditProperties;
-
   @Override
   protected Set<Class<?>> getInitialEntitySet() throws ClassNotFoundException {
     final Set<Class<?>> initialEntitySet = super.getInitialEntitySet();
@@ -61,16 +59,17 @@ public class MongoDBConfig extends AbstractMongoClientConfiguration {
             CodecRegistries.fromRegistries(
                 CodecRegistries.fromCodecs(new OffsetDateTimeCodec(), new ZonedDateTimeCodec()),
                 MongoClientSettings.getDefaultCodecRegistry()))
-        .applyToSocketSettings(
-            socketBuilder ->
-                socketBuilder
-                    .connectTimeout(
-                        5, TimeUnit.MINUTES) // Increase connection timeout to 30 seconds
-                    .readTimeout(5, TimeUnit.MINUTES)) // Increase read timeout to 30 seconds
-        .applyToClusterSettings(
-            clusterBuilder ->
-                clusterBuilder.serverSelectionTimeout(
-                    5, TimeUnit.MINUTES)); // Increase server selection timeout to 30 seconds
+//        .applyToSocketSettings(
+//            socketBuilder ->
+//                socketBuilder
+//                    .connectTimeout(
+//                        5, TimeUnit.MINUTES) // Increase connection timeout to 30 seconds
+//                    .readTimeout(5, TimeUnit.MINUTES)) // Increase read timeout to 30 seconds
+//        .applyToClusterSettings(
+//            clusterBuilder ->
+//                clusterBuilder.serverSelectionTimeout(
+//                    5, TimeUnit.MINUTES)) // Increase server selection timeout to 30 seconds
+    ;
   }
 
   @Override
