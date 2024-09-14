@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import org.bson.BsonReader;
 import org.bson.BsonType;
@@ -59,16 +58,16 @@ public class MongoDBConfig extends AbstractMongoClientConfiguration {
             CodecRegistries.fromRegistries(
                 CodecRegistries.fromCodecs(new OffsetDateTimeCodec(), new ZonedDateTimeCodec()),
                 MongoClientSettings.getDefaultCodecRegistry()))
-//        .applyToSocketSettings(
-//            socketBuilder ->
-//                socketBuilder
-//                    .connectTimeout(
-//                        5, TimeUnit.MINUTES) // Increase connection timeout to 30 seconds
-//                    .readTimeout(5, TimeUnit.MINUTES)) // Increase read timeout to 30 seconds
-//        .applyToClusterSettings(
-//            clusterBuilder ->
-//                clusterBuilder.serverSelectionTimeout(
-//                    5, TimeUnit.MINUTES)) // Increase server selection timeout to 30 seconds
+    //        .applyToSocketSettings(
+    //            socketBuilder ->
+    //                socketBuilder
+    //                    .connectTimeout(
+    //                        5, TimeUnit.MINUTES) // Increase connection timeout to 30 seconds
+    //                    .readTimeout(5, TimeUnit.MINUTES)) // Increase read timeout to 30 seconds
+    //        .applyToClusterSettings(
+    //            clusterBuilder ->
+    //                clusterBuilder.serverSelectionTimeout(
+    //                    5, TimeUnit.MINUTES)) // Increase server selection timeout to 30 seconds
     ;
   }
 

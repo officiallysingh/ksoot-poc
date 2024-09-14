@@ -83,7 +83,9 @@ server:
 #        context-path: /api
 logging:
   level:
-    ROOT: DEBUG
+    ROOT: INFO
+    '[org.mongodb.driver]': warn
+#    '[org.springframework.data.mongodb.core.MongoTemplate]': debug
 debug: false
 
 #------------------------- Swagger configuration -------------------------
@@ -96,20 +98,21 @@ springdoc:
     - group: Location
       display-name: Location
       paths-to-match: /**/location/**
-#    - group: audit
-#      display-name: Audit
-#      paths-to-match: /**/audit-history/**
+  #    - group: audit
+  #      display-name: Audit
+  #      paths-to-match: /**/audit-history/**
   swagger-ui:
     syntaxHighlight:
       activated: true
 
 mongock:
-  enabled: true
+  enabled: false
   default-author: system
   index-creation: true
   #    transaction-strategy: change_unit
   migration-scan-package:
     - com.ksoot.poc.domain.migration
+
 javers:
   mappingStyle: FIELD
   algorithm: SIMPLE
@@ -118,10 +121,10 @@ javers:
   typeSafeValues: false
   initialChanges: true
   terminalChanges: true
-#  packagesToScan:
+  #  packagesToScan:
   auditableAspectEnabled: true
   springDataAuditableRepositoryAspectEnabled: true
-#  objectAccessHook:
+  #  objectAccessHook:
   usePrimitiveDefaults: true
   prettyPrintDateFormats:
     localDateTime: 'dd MMM yyyy, HH:mm:ss'
